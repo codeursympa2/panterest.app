@@ -3,5 +3,10 @@
 {% block title %}Coding by codeur 269{% endblock %}
 
 {% block body %}
-All pins
+<h1>All pins</h1>
+<p>We have <strong>{{ pins|length }}</strong> {{pluralize(pins|length,"pin","pins")}}</p>
+{% for pin in pins %}
+   <h2>{{ pin.title }}</h2> 
+   <p> {{ pin.description}} </p>
+{% endfor %}
 {% endblock %}
