@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+{% block title %}Vue: {{pin.title}}{% endblock %}
+{% block body %}
+    <article>
+    <h1>{{ pin.title }}</h1>
+    <p>{{ pin.description }}</p>
+    </article>
+    <a href="{{ path('home') }}">Home</a>
+{% endblock %}

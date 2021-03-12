@@ -2,15 +2,20 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimeStamp;
 use App\Repository\PinRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PinRepository::class)
  * @ORM\Table(name="pins")
+ *pour le controle de la date et heure de modification et ajout
+ * @ORM\HasLifecycleCallbacks()
+ * currentTimestam permet donner la date et l'heure actuel
  */
 class Pin
 {
+    use TimeStamp;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,6 +33,7 @@ class Pin
      */
     private $description;
 
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -56,4 +62,5 @@ class Pin
 
         return $this;
     }
+
 }
