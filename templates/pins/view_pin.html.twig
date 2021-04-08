@@ -5,5 +5,18 @@
     <h1>{{ pin.title }}</h1>
     <p>{{ pin.description }}</p>
     </article>
+     <a href="{{ path('edit_pin',{id:pin.id}) }}">Editer</a>|
+     <a href="#" onclick="event.preventDefault();
+      confirm('Voulez vous vraiment supprimer ce pin ?')&&
+     document.getElementById('form_delete').submit();
+     
+     ">Supprimer</a>|
     <a href="{{ path('home') }}">Home</a>
+
+     <form id="form_delete" action="{{path('delete_pin',{id:pin.id})}}" method="post" style="display:none">
+          <!-- champs de caché de sécurité (~) signigie la concaténation chez twig -->
+         <input type="text" name="montoken" value="{{ csrf_token("pin.delete" ~ pin.id) }}">
+        <!-- -->
+         <input type="hidden" name="_method" value="Delete">
+       </form>
 {% endblock %}

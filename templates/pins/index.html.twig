@@ -6,7 +6,7 @@
 <h1>All pins</h1>
 <p>We have <strong>{{ pins|length }}</strong> {{pluralize(pins|length,"pin","pins")}}</p>
 {% for pin in pins %}
-   <h2 onmouseover="this.style.fontSize='50px'" onmouseout="this.style.fontSize=''"><a href="{{ path("view_pin",{id:pin.id}) }}
+   <h2><a href="{{ path("view_pin",{id:pin.id}) }}
     ">{{ pin.title }}</a></h2> 
    <p> {{ pin.description}} </p>
 {% endfor %}
