@@ -52,6 +52,9 @@ class PinsController extends AbstractController
         if($form->isSubmitted()&& $form->isValid()){
             $this->em->persist($pin);
             $this->em->flush();
+            //ajout du message flush
+            $this->addFlash("success","Pin crée avec succès");
+
            return  $this->redirectToRoute('home');
         }
         return $this->render('pins/create_pin.html.twig',['form'=>$form->createView()]);
@@ -68,6 +71,7 @@ class PinsController extends AbstractController
 
        if($form->isSubmitted()&& $form->isValid()){
         $this->em->flush();
+        $this->addFlash("success","Modification du pin effcetuée");
        return  $this->redirectToRoute('home');
     }
         return $this->render('pins/edit_pin.html.twig',['form'=>$form->createView(),'pin'=>$pin]);
@@ -82,7 +86,7 @@ class PinsController extends AbstractController
             $this->em->remove($pin);
             $this->em->flush();
             //message flash
-            //$this->addFlash('info ','Pin supprimé avec succès');
+            $this->addFlash('info ','Pin supprimé avec succès');
         }
         return $this->redirectToRoute('home');
     }

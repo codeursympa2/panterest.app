@@ -10,8 +10,7 @@
       confirm('Voulez vous vraiment supprimer ce pin ?')&&
      document.getElementById('form_delete').submit();
      
-     ">Supprimer</a>|
-    <a href="{{ path('home') }}">Home</a>
+     ">Supprimer</a>
 
      <form id="form_delete" action="{{path('delete_pin',{id:pin.id})}}" method="post" style="display:none">
           <!-- champs de caché de sécurité (~) signigie la concaténation chez twig -->

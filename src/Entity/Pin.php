@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Entity\Traits\TimeStamp;
 use App\Repository\PinRepository;
 use Doctrine\ORM\Mapping as ORM;
+//Pour ne pas que les champs soient vide
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PinRepository::class)
@@ -25,11 +27,15 @@ class Pin
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ce champs est obligatoire")
+     * @Assert\Length(min=3,minMessage="Saisir plus de de 3 caractere")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Ce champs est obligatoire")
+     * @Assert\Length(min=10)
      */
     private $description;
 
@@ -44,7 +50,7 @@ class Pin
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
