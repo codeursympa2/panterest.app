@@ -32,3 +32,17 @@ html, body{
     color:white;
     margin-top:5px;
 }
+.vich-image .form-check{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.vich-image img{
+    margin-left: 70px;
+    margin-bottom:20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px rgb(133, 99, 99);
+}
+.pin img:hover{
+    transition: transform 0.9s ease-out;
+    transform: scale(1.075);
+}

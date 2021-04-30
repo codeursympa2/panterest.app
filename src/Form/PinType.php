@@ -20,8 +20,9 @@ class PinType extends AbstractType
                 'label' => 'Ajouter l\'image (JPG ou PNG)',
                 'required' => false,
                 'allow_delete' => true,
-                'delete_label' => 'Supprimer l\'image ?',
                 'download_label' => 'Télécharger l\'image',
+                'delete_label' => 'Supprimer l\'image ?',
+               
                 'download_uri' => true,
                 'image_uri' => true,
                 'asset_helper' => true,
