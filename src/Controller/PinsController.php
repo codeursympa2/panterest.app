@@ -43,10 +43,8 @@ class PinsController extends AbstractController
     public function create_pin(Request $request): Response
     {
        $pin=new pin;
-       $form= $this->createFormBuilder($pin)
-            ->add('title',TextType::class)
-            ->add('description',TextareaType::class)
-            ->getForm();
+       $form= $this->createForm(PinType::class,$pin,['method'=>'POST']);
+           
         //recuperation données du formulaire
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()){

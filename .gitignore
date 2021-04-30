@@ -21,3 +21,12 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+#Pour ignorer le dossier des images
+###> custom env vars ###
+/public/images/
+### end custom env vars ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

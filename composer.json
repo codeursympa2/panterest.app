@@ -13,6 +13,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
         "knplabs/knp-time-bundle": "^1.16",
+        "liip/imagine-bundle": "^2.6",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "5.2.*",
@@ -43,7 +44,8 @@
         "symfony/yaml": "5.2.*",
         "twig/extra-bundle": "^3.3",
         "twig/string-extra": "^3.3",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^1.17"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.2",
@@ -95,7 +97,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "5.2.*"
         }
     }
