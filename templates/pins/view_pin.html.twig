@@ -6,9 +6,9 @@
 	<div class="row">
 		<div class="col-md-9 mx-auto">
 			<article class="pin bg-white rounded shadow ">
-				<div class="mw-100 overflow-hidden">
+				<div class="mw-100 rounded-top overflow-hidden">
 					<a href="{{ path("view_pin",{id:pin.id}) }}">
-						<img class="w-100 rounded-top" src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('img/balls-2882427_1280.jpg')) | imagine_filter('image_grand')}}" alt="{{ pin.title }}"/>
+						<img class="w-100 " src="{{ (pin.imageName ? vich_uploader_asset(pin) : asset('img/balls-2882427_1280.jpg')) | imagine_filter('image_grand')}}" alt="{{ pin.title }}"/>
 					</a>
 				</div>
 				<div class="container">
@@ -18,20 +18,21 @@
 					<!---<p> { pin.description|u.truncate(30,'...', false)}} </p>-->
 
 					<p class="text-muted mb-3 pl-3 pb-3">Ajouté il y a
-						<time datetime="{{ pin.createdAt|date('Y-m-d') }}">{{ pin.createdAt|ago }}</time><small>
+						<time datetime="{{ pin.createdAt|date('Y-m-d') }}">{{ pin.createdAt|ago }}</time>
+						<small>
 							par [OWNER FULL NAME]</small>
 					</p>
 					<p class="h3-responsive pl-3 pb-3">
 						{{ pin.description }}
 					</p>
-          <div class="mb-3">
-					<a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-primary mb-3 mr-2">Editer</a>
-					<a href="#" class="btn btn-danger mb-3" onclick="event.preventDefault();
-								      confirm('Voulez vous vraiment supprimer ce pin ?')&&
-								     document.getElementById('form_delete').submit();
-						
-								     ">Supprimer</a>
-          </div> 
+					<div class="mb-3">
+						<a href="{{ path('edit_pin',{id:pin.id}) }}" class="btn btn-primary mb-3 mr-2">Editer</a>
+						<a href="#" class="btn btn-danger mb-3" onclick="event.preventDefault();
+															      confirm('Voulez vous vraiment supprimer ce pin ?')&&
+															     document.getElementById('form_delete').submit();
+							
+															     ">Supprimer</a>
+					</div>
 					<form
 						id="form_delete" action="{{path('delete_pin',{id:pin.id})}}" method="post" style="display:none">
 						<!-- champs de caché de sécurité (~) signigie la concaténation chez twig -->
