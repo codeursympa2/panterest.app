@@ -4,7 +4,7 @@ security:
             algorithm: auto
         mon_encoder:
             algorithm: bcrypt
-            cost: 33
+            cost: 13
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
