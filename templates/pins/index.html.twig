@@ -22,7 +22,7 @@
       <h2 class="H5 pl-3"><a class="text-secondary text-muted text-decoration-none" href="{{ path("view_pin",{id:pin.id}) }}
       ">{{ pin.title }}</a></h2> 
       <!---<p> { pin.description|u.truncate(30,'...', false)}} </p>-->
-      <p class="text-muted pl-3 pb-3">Ajouté il y a  {{pin.createdAt|ago}}<small> par [OWNER FULL NAME]</small></p>
+      <p class="text-muted pl-3 pb-3">Ajouté il y a  {{pin.createdAt|ago}}<small> par <strong>{{ pin.user.FullName }}  </strong></small></p>
    </div>
    </article>
    </div>

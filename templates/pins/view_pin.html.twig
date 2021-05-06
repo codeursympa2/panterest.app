@@ -20,7 +20,7 @@
 					<p class="text-muted mb-3 pl-3 pb-3">Ajouté il y a
 						<time datetime="{{ pin.createdAt|date('Y-m-d') }}">{{ pin.createdAt|ago }}</time>
 						<small>
-							par [OWNER FULL NAME]</small>
+							par <strong>{{ pin.user.FullName }}</strong></small>
 					</p>
 					<p class="h3-responsive pl-3 pb-3">
 						{{ pin.description }}

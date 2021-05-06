@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pin;
 use App\Form\PinType;
 use App\Repository\PinRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,7 +41,7 @@ class PinsController extends AbstractController
      /**
      * @Route("/pin/create", name="create_pin",methods="GET|POST")
      */
-    public function create_pin(Request $request): Response
+    public function create_pin(Request $request,UserRepository $user): Response
     {
        $pin=new pin;
        $form= $this->createForm(PinType::class,$pin,['method'=>'POST']);
@@ -48,6 +49,8 @@ class PinsController extends AbstractController
         //recuperation données du formulaire
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()){
+            $anrchi=$user->find(1);
+            $pin->setUser($anrchi);
             $this->em->persist($pin);
             $this->em->flush();
             //ajout du message flush
