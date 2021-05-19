@@ -3,7 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+<form method="post" novalidate>
    <div class="col-md-6 mx-auto">
      {% if error %}
         <div class="alert alert-error rounded mb-3 text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

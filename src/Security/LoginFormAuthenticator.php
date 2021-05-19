@@ -114,7 +114,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         //$request->$this->session->getFlashBag()->add('success', 'Connexion reussi avec succès');
         $this->container->get('session')->getFlashBag()->add('success', 'Connexion reussi avec succès');
-        //si l'on etait pas connecté on sera redirigé vers la ou etait apres connexion 
+        //si l'on est connecté on sera redirigé vers la ou etait apres connexion 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }

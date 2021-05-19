@@ -7,10 +7,11 @@ security:
             cost: 13
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    #Le provider va nous permettre de sauvegarder l'email dans la session comme precisé dans property
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
-            entity: 
+            entity:  
                 class: App\Entity\User
                 property: email
     firewalls:
@@ -18,7 +19,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+        #autorisation des connexions anonymes
             anonymous: true
+        #gagner en terme de performance
             lazy: true
             provider: app_user_provider
             guard:
