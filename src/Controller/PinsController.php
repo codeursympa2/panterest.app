@@ -49,7 +49,9 @@ class PinsController extends AbstractController
         //recuperation données du formulaire
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()){
-            $anrchi=$user->find(1);
+            //comme on est au niveau d'un controller on utilise $this->getUser()
+            //pour acceder à l'utilisateur
+            $anrchi=$this->getUser();
             $pin->setUser($anrchi);
             $this->em->persist($pin);
             $this->em->flush();
