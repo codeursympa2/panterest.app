@@ -43,6 +43,10 @@ class PinsController extends AbstractController
      */
     public function create_pin(Request $request,UserRepository $user): Response
     {
+        if (!$this->getUser()) {
+            $this->addFlash('error','Veillez vous connecter');
+            return $this->redirectToRoute('app_login');
+        }
        $pin=new pin;
        $form= $this->createForm(PinType::class,$pin,['method'=>'POST']);
            

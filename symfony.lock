@@ -555,6 +555,9 @@
     "symfony/yaml": {
         "version": "v5.2.5"
     },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.5.0"
+    },
     "theofidry/psysh-bundle": {
         "version": "4.4.0"
     },

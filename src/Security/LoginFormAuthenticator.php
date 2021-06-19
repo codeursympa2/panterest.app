@@ -48,7 +48,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
      * elle est appéllé dans chaque page puis aprés il verifie si le nom de la route est app_login
      * et la methode est POST il fait l'authentification 
      */
-    public function supports(Request $request)
+    public function supports(Request $request):bool
     {
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
@@ -57,7 +57,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     /**
      * est appellé lorsque supports est egal à true
      */
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request):array
     {
         $credentials = [
             'email' => $request->request->get('email'),
@@ -78,7 +78,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new CustomUserMessageAuthenticationException("Token invalide");
+            throw new CustomUserMessageAuthenticationException("Token invalide.");
         } 
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
@@ -113,7 +113,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
         //$request->$this->session->getFlashBag()->add('success', 'Connexion reussi avec succès');
-        $this->container->get('session')->getFlashBag()->add('success', 'Connexion reussi avec succès');
+        $this->container->get('session')->getFlashBag()->add('success', 'Bienvenue '.$token->getUser()->getFullName().' !');
         //si l'on est connecté on sera redirigé vers la ou etait apres connexion 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
@@ -126,6 +126,6 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     protected function getLoginUrl()
     {
         //urlGenerator nous permet de generer une route avec un url donné
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+        return $this->urlGenerator->generate('self::LOGIN_ROUTE');
     }
 }
