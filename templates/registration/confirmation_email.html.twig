@@ -1,0 +1,12 @@
+<h1 class="text-center">Panterest.app</h1>
+<h1 class="alert alert-info">Bonjour! Veillez confirmer votre adresse Email!</h1>
+
+<p>
+   Veillez confirmer en cliquant sur ce lien en dessous: <br><br>
+    <a href="{{ signedUrl|raw }}">Confirmer mon email</a>.
+    Ce lien expire dans  {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Cordialement!
+</p>
