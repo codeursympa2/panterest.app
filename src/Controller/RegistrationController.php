@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
             $this->addFlash('error','Vous avez dejà un compte');
             return $this->redirectToRoute('home');
         }
-        
+        #envoyer un email sous symfony
         $email = (new Email())
             ->from('hello@example.com')
             ->to('you@example.com')
@@ -71,7 +71,9 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('codeur269@panterest.app.sn', 'Panterest'))
+                    //->from(new Address('codeur269@panterest.app.sn', 'Panterest'))
+                   // ->from(new Address($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']))
+                    ->from(new Address($this->getParameter('app.mail_from_address'), $this->getParameter('app.mail_from_name')))
                     ->to($user->getEmail())
                     ->subject('Veillez confirmer votre adresse s\'il vous plaît.')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
