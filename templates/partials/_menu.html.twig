@@ -17,11 +17,16 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" onclick="event.preventDefault();confirm('Voulez-vous vraiement vous déconnectez?') && document.getElementById('form-logout').submit();" href="#">Logout</a>
+						<!-- Avec GET -->
+						<a class="nav-link" onclick=" return confirm('Voulez-vous vraiement vous déconnectez?');" href="{{ logout_path('main') }}">Logout</a>
+						<!-- Avec POST -->
+						<!-- <a class="nav-link" onclick="event.preventDefault();confirm('Voulez-vous vraiement vous déconnectez?') && document.getElementById('form-logout').submit();" href="#">Logout</a>-->
 					</li>
+					<!-- Suite POST
 					<form method="POST" id="form-logout" action="{{ path('app_logout') }}" style="display:none;">
 						<input type="hidden" name="csrf_token" value="{{ csrf_token('logout') }}">
 					</form>
+					 -->
 				{% else %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path ('app_register') }}">Register</a>

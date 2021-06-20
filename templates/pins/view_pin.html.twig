@@ -33,8 +33,7 @@
 							
 															     ">Supprimer</a>
 					</div>
-					<form
-						id="form_delete" action="{{path('delete_pin',{id:pin.id})}}" method="post" style="display:none">
+					<form id="form_delete" action="{{path('delete_pin',{id:pin.id})}}" method="post" style="display:none">
 						<!-- champs de caché de sécurité (~) signifie la concaténation chez twig -->
 						<input
 						type="text" name="montoken" value="{{ csrf_token("pin.delete" ~ pin.id) }}">
