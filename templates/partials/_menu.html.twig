@@ -17,8 +17,11 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" onclick="return confirm('Voulez-vous vraiment vous déconnectez ?')" href="{{ path('app_logout') }}">Logout</a>
+						<a class="nav-link" onclick="event.preventDefault();confirm('Voulez-vous vraiement vous déconnectez?') && document.getElementById('form-logout').submit();" href="#">Logout</a>
 					</li>
+					<form method="POST" id="form-logout" action="{{ path('app_logout') }}" style="display:none;">
+						<input type="hidden" name="csrf_token" value="{{ csrf_token('logout') }}">
+					</form>
 				{% else %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path ('app_register') }}">Register</a>

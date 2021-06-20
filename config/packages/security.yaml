@@ -29,6 +29,10 @@ security:
                     - App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
+                #Sécurité pour la déconnexion
+                csrf_parameter:       csrf_token
+                csrf_token_generator: Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
+                csrf_token_id:        logout
                 # where to redirect after logout
                 target: app_login
             remember_me:
