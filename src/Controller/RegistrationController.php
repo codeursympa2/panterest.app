@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Anrchi\EmailSendA;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
@@ -68,21 +69,10 @@ class RegistrationController extends AbstractController
             //dd($form->getData());
             $em->persist($user);
             $em->flush();
-
+            EmailSendA::sendAnrchi($user,$this->emailVerifier);
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    //->from(new Address('codeur269@panterest.app.sn', 'Panterest'))
-                   // Variable d'environnement ->from(new Address($_ENV['MAIL_FROM_ADDRESS'], $_ENV['MAIL_FROM_NAME']))
-                   /**
-                    * Variable du container
-                    */
-                    ->from(new Address($this->getParameter('app.mail_from_address'), $this->getParameter('app.mail_from_name')))
-                    ->to($user->getEmail())
-                    ->subject('Veillez confirmer votre adresse s\'il vous plaît.')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
             // do anything else you need here, like send an email
+            $request->getSession()->set('email','ok');
             //autehtification de l'utilisateur
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -109,14 +99,35 @@ class RegistrationController extends AbstractController
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
+            $request->getSession()->set('email','ok');
             $this->addFlash('error', 'Le lien pour vérifier votre e-mail n’est pas valide. Veuillez demander un nouveau lien.');
 
             return $this->redirectToRoute('home');
         }
-
+        $this->get('session')->clear();
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Votre email a été verifié avec succès.');
 
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("renvoie/email",name="app_redirect_email")
+     *
+     */
+    public function renvoieEmail():Response
+    {   /** 
+        $email=$this->get('session')->get('email');
+        $user=new User;
+        $userEmail=$user->setEmail($email);
+        */
+        $userEmail=$this->getUser();
+        EmailSendA::sendAnrchi($userEmail,$this->emailVerifier);
+        $this->addFlash(
+           'success',
+           'Un autre email de confirmation a été envoyé à votre adresse email. Merci de vérifier.'
+        );
+        $this->get('session')->clear();
         return $this->redirectToRoute('home');
     }
 }

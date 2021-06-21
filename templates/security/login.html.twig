@@ -1,20 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Connexion!{% endblock %}
+
 
 {% block body %}
 <form method="post" novalidate>
-   <div class="col-md-6 mx-auto">
-     {% if error %}
+   <div class="col-md-5 mx-auto">
+    {% if error %}
         <div class="alert alert-error rounded mb-3 text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     
 
     <h1 class="h3 mb-3 font-weight-normal text-center">Connexion</h1>
-    <label for="inputEmail">Email</label>
+    <label for="inputEmail">Email:*</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Mot de passe</label>
+    <label for="inputPassword">Mot de passe:*</label>
     <input type="password" name="password" id="inputPassword" class="form-control" required>
 
     <input type="hidden" name="_csrf_token"
@@ -33,13 +34,13 @@
             </label>
             
         </div>
-        <a href=""> J'ai oublié mon mot de passe !</a>
+        <a href="" class="text-decoration-none"> J'ai oublié mon mot de passe !</a>
        </div>
 
     <button class="btn btn-lg btn-primary btn-block col-12" type="submit">
         Se connecter
     </button>
-    <p class="text-center mt-5">Vous n'avez pas de compte ? <a href="{{ path ('app_register') }}">Créer mon compte</a></p>
+    <p class="text-center mt-5">Vous n'avez pas de compte ? <a href="{{ path ('app_register') }}" class="text-decoration-none"> Créer mon compte </a></p>
 </form>
 </div>
 {% endblock %}

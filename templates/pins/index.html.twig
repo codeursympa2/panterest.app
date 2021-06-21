@@ -3,6 +3,17 @@
 {% block title %}Coding by codeur 269{% endblock %}
 
 {% block body %}
+{% if app.request.session.get("email")  %}
+   <div class="alert alert-warning text-dark m-3 ">Un email de confirmation a été envoyé à votre adresse email.
+      <p>
+         Vous n'avez pas reçu d'email ? <a href="#" onclick="event.preventDefault(); document.getElementById('form-email').submit()" class="text-decoration-none">Renvoyer l'email.</a>
+         <form id="form-email" action="{{ path("app_redirect_email")}}" method="POST" style="display:none;">
+            <input type="submit" value="send" >
+         </form>
+      </p>
+   </div>
+{% endif %}
+
 {% if pins|length > 0  %}
 <div class="text-center">
    <h1>All pins</h1>
