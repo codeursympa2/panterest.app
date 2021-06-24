@@ -39,6 +39,10 @@ class ResetPasswordController extends AbstractController
      */
     public function request(Request $request, MailerInterface $mailer): Response
     {
+        if ($this->getUser()) {
+            $this->addFlash('error','Vous êtes dejà connecté');
+            return $this->redirectToRoute('home');
+        }
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
@@ -63,6 +67,10 @@ class ResetPasswordController extends AbstractController
     {
         // We prevent users from directly accessing this page
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
+            $this->addFlash(
+               'error',
+               'Veillez saisir un email.'
+            );
             return $this->redirectToRoute('app_forgot_password_request');
         }
 
@@ -149,10 +157,10 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     'There was a problem handling your password reset request - %s',
-            //     $e->getReason()
-            // ));
+            $this->addFlash('reset_password_error', sprintf(
+            'There was a problem handling your password reset request - %s',
+             $e->getReason()
+            ));
 
             return $this->redirectToRoute('app_check_email');
         }
