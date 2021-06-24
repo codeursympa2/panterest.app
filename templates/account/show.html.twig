@@ -13,7 +13,7 @@
             <p><small>Account created on {{ app.user.createdAt|date('d/m/y') }}</small></p>
 
             <p>
-                <a href="{{ path ('account_edit') }}" class="text-decoration-none">Edit Account</a> | <a href="" class="text-decoration-none">Change password</a>
+                <a href="{{ path ('account_edit') }}" class="text-decoration-none">Edit Account</a> | <a href="{{ path ('account_change_pass') }}" class="text-decoration-none">Change password</a>
             </p>
         </div>
     </div>
