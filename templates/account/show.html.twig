@@ -10,9 +10,10 @@
 
             <p class="lead">{{ app.user.email }}</p>
             <p class="h2-responsive">{{ app.user.fullName }}</p>
+            <p><small>Account created on {{ app.user.createdAt|date('d/m/y') }}</small></p>
 
             <p>
-                <a href="" class="text-decoration-none">Edit Account</a> | <a href="" class="text-decoration-none">Change password</a>
+                <a href="{{ path ('account_edit') }}" class="text-decoration-none">Edit Account</a> | <a href="" class="text-decoration-none">Change password</a>
             </p>
         </div>
     </div>

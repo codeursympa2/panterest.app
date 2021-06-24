@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit account {% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 mx-auto ">
+            <h1 class="mx-5 text-center">Edition du compte</h1>
+
+                {{ form_start(form) }}
+               <div class="row">
+                    <div class="col-md-6">{{ form_row(form.firstName)}} </div>
+                    <div class="col-md-6"> {{ form_row(form.lastName)}} </div>
+               </div>
+                {{ form_rest(form)}} 
+                    <button type="submit" class="btn mt-5 btn-primary col-12 btn-lg btn-block">Mettre à jour</button>
+                {{ form_end(form) }} 
+        </div>
+    </div>
+{% endblock %}
