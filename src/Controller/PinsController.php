@@ -14,7 +14,12 @@ use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
+/**
+ *Decommenter@IsGranted("ROLE_ADMIN",null,"Accès non autorisé")
+ */
 class PinsController extends AbstractController
 {
     private $em;
@@ -26,7 +31,9 @@ class PinsController extends AbstractController
      * @Route("/", name="home",methods="GET")
      */
     public function index(PinRepository $pr): Response
+    
     {
+        #$this->denyAccessUnlessGranted('ROLE_ADMIN',null,'Accès non autorisé');
         $pins=$pr->findBy([],['createdAt'=>'DESC']);
         return $this->render('pins/index.html.twig',compact('pins'));
     }

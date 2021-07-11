@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
@@ -127,5 +128,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
     {
         //urlGenerator nous permet de generer une route avec un url donné
         return $this->urlGenerator->generate('app_login');
+    }
+
+    /**
+     * Redefinition depuis AbstractLoginFormAuthenticator
+     * On controle si l'utilisateur n'est pas connecté et qu'il veut acceder a une page securisée on le redirige vers la page de connection.
+     *
+     * @return RedirectResponse
+     */
+    public function start(Request $request, AuthenticationException $authException = null)
+    {
+       $request->getSession()->getFlashBag()->add('error','Veillez vous connecter.');
+        //recupération de l'url
+        $url = $this->getLoginUrl();
+        //redirection
+        return new RedirectResponse($url);
     }
 }

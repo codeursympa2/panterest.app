@@ -16,7 +16,10 @@
 
 {% if pins|length > 0  %}
 <div class="text-center">
+   
+   {% if is_granted('ROLE_USER')  %}
    <h1>All pins</h1>
+   {% endif %}
    <p>We have <strong>{{ pins|length }}</strong> {{pluralize(pins|length,"pin","pins")}}</p>
 </div>
    {% for row in pins|batch(3) %}
