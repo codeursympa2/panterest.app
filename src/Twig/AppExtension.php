@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -13,6 +14,8 @@ class AppExtension extends AbstractExtension
     public function __construct(Security $security)
     {
         $this->security=$security;
+     
+       // dd($security->isGranted("ROLE_USER"));
     }
     
     public function getFilters(): array

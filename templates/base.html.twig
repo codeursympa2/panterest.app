@@ -21,6 +21,10 @@
     {% endfor %}
      {% include "partials/_menu.html.twig" %}
         <main role="main" class="container">
+        {% if is_granted('IS_IMPERSONATOR') %}
+            <a href="{{ impersonation_exit_path(path('home') ) }}">Exit impersonation</a>
+        {% endif %}
+
         {% block body %}{% endblock %}
         </main>
         {% include "partials/_footer.html.twig" %}

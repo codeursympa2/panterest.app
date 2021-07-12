@@ -29,9 +29,8 @@
         #}
        <div class="d-flex justify-content-between mt-4">
          <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Se souvenir de moi
-            </label>
+            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+    <label for="remember_me">Keep me logged in</label>
             
         </div>
         <a href="{{ path ('app_forgot_password_request') }}" class="text-decoration-none"> J'ai oublié mon mot de passe !</a>

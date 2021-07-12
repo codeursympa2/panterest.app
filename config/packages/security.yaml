@@ -46,10 +46,25 @@ security:
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/account, roles: ROLE_USER }
+        # - { path: ^/account, roles: ROLE_USER }
         # - { path: ^/profile, roles: ROLE_USER }
+        #Pour plus de facilité
+        - { path: ^/login$, roles: IS_ANONYMOUS }
+        - { path: ^/register$, roles: IS_ANONYMOUS }
+        - { path: ^/reset-password, roles: IS_ANONYMOUS }
+        - { path: ^/account/edit, roles: IS_AUTHENTICATED_FULLY }
+        
+        #- { path: ^/reset-password/check-email$, roles: IS_ANONYMOUS }
+        #- { path: ^/, roles: ROLE_USER }
+
+        #Gestion de plusieurrs role
+    role_hierarchy:
+        ROLE_PROF: [ROLE_DONNER_COURS,ROLE_DONNER_NOTE]
+        ROLE_ETUDIANT: [ROLE_SUIVRE_COURS,ROLE_CONSULTER]
+        #impersonalisation autorisation
+        ROLE_USER: [ROLE_ALLOWED_TO_SWITCH]

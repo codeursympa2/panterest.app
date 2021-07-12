@@ -14,7 +14,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Core\Security;
 
+/**
+ * decom@IsGranted("ROLE_USER")
+ */
 class AccountController extends AbstractController
 {
     private $em;
@@ -24,19 +29,26 @@ class AccountController extends AbstractController
     }
     /**
      * @Route("/account", name="account",methods="GET")
+     * @IsGranted("ROLE_USER")
      */
     public function show(): Response
     {
         return $this->render('account/show.html.twig');
     }
     /**
-     * @Route("/account/edit", name="account_edit",methods="GET|POST")
+     * @Route("/account/edit", name="account_edit",methods="GET|PATCH")
+     * On specifie que pour changer les information du compte il faut etre connecté
+     * sans le cookie remember me. Pour plus de sécurité
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request,Security $security): Response
     {
+        //dd($security->IsGranted("IS_REMEMBERED"));
         $user=$this->getUser();
 
-        $form=$this->createForm(UserFormType::class,$user);
+        $form=$this->createForm(UserFormType::class,$user,[
+            'method'=>'PATCH'
+        ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $this->em->flush();
@@ -52,12 +64,16 @@ class AccountController extends AbstractController
         ]);
     }
      /**
-     * @Route("/account/change-password", name="account_change_pass",methods="GET|POST")
+      * PATCH pour une petite modification
+     * @Route("/account/change-password", name="account_change_pass",methods="GET|PATCH")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function change_password(Request $request,UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user=$this->getUser();
-        $form=$this->createForm(ChangePasswordFormType::class,null,['current_password_is_required'=>true]);
+        $form=$this->createForm(ChangePasswordFormType::class,null,['current_password_is_required'=>true
+        ,'method'=>'PATCH'
+    ]);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $user->setPassword(
