@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- *Decommenter@IsGranted("ROLE_ADMIN",null,"Accès non autorisé")
+ *decom@IsGranted("ROLE_USER",null,"Accès non autorisé")
  */
 class PinsController extends AbstractController
 {
@@ -29,7 +29,9 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/", name="home",methods="GET")
+     *d@Security("is_granted('ROLE_USER') && user.isVerified()",message="Accès non autorisé.")
      */
+    
     public function index(PinRepository $pr): Response
     
     {
@@ -39,6 +41,7 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pin/view/{id<[0-9]+>}", name="view_pin", methods="GET")
+     *@Security("is_granted('ROLE_USER') && user.isVerified()",message="Accès non autorisé",statusCode=404)
      */
     public function view_pin(Pin $pin): Response
     {
@@ -47,13 +50,24 @@ class PinsController extends AbstractController
 
      /**
      * @Route("/pin/create", name="create_pin",methods="GET|POST")
+     * @Security("is_granted('ROLE_USER') && user.isVerified()",message="Accès non autorisé",statusCode=404)
      */
     public function create_pin(Request $request,UserRepository $user): Response
     {
+        /**
+         * 
+        
         if (!$this->getUser()) {
-            $this->addFlash('error','Veillez vous connecter');
-            return $this->redirectToRoute('app_login');
+           // $this->addFlash('error','Veillez vous connecter');
+            //return $this->redirectToRoute('app_login');
+            throw $this->createAccessDeniedException("Accès non autorisé.");
         }
+        if (!$this->getUser()->isVerified()) {
+             // $this->addFlash('error','Veillez vous connecter');
+             //return $this->redirectToRoute('app_login');
+             throw $this->createAccessDeniedException();
+         }
+        */
        $pin=new pin;
        $form= $this->createForm(PinType::class,$pin,['method'=>'POST']);
            
@@ -76,6 +90,7 @@ class PinsController extends AbstractController
     /**
      * put pour une mis à jour
      * @Route("/pin/{id<[0-9]+>}/edit",name="edit_pin",methods="GET|PUT")
+     * @Security("is_granted('MANAGE_PIN',pin)")
      */
     public function edit_pin(Pin $pin,HttpFoundationRequest $request): Response
     {
@@ -92,7 +107,11 @@ class PinsController extends AbstractController
     }
     /**
      * @Route("/pin/{id<[0-9]+>}/delete",name="delete_pin",methods="DELETE")
+     *decom @Security("is_granted('ROLE_USER') && user.isVerified() && pin.getUser()==user",message="Accès non autorisé",statusCode=404)
+     * decom@Security("is_granted('MANAGE_PIN',pin)")
+     * @IsGranted("MANAGE_PIN",subject="pin")
      */
+    
     public function delete_pin(Pin $pin,Request $request):Response
     {
         $csrf=$this->isCsrfTokenValid('pin.delete' . $pin->getId(),$request->request->get('montoken'));
